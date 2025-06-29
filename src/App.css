@@ -1,4 +1,3 @@
-/* Reset and base styles */
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +15,6 @@ body {
   color: #333;
 }
 
-/* Login styles */
 .login-container {
   display: flex;
   justify-content: center;
@@ -93,7 +91,6 @@ body {
   color: #555;
 }
 
-/* Music Library styles */
 .music-library {
   max-width: 1200px;
   margin: 0 auto;
@@ -144,7 +141,6 @@ body {
   transform: translateY(-1px);
 }
 
-/* Stats bar */
 .stats-bar {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -180,7 +176,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Controls */
 .controls {
   background: white;
   padding: 25px;
@@ -265,11 +260,10 @@ body {
 }
 
 .add-song-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
 }
 
-/* Add song form */
 .add-song-form {
   background: white;
   padding: 30px;
@@ -336,10 +330,9 @@ body {
 }
 
 .cancel-btn:hover {
-  background: #e9ecef;
+  background: #6c757d;
 }
 
-/* Songs container */
 .songs-container {
   display: flex;
   flex-direction: column;
@@ -451,25 +444,23 @@ body {
 }
 
 .delete-btn:hover {
-  background: #ee5a24;
+  background: #dc3545;
   transform: scale(1.1);
 }
 
-/* No results */
 .no-results {
-  background: white;
-  padding: 60px;
-  border-radius: 16px;
   text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .no-results p {
-  font-size: 18px;
   color: #666;
+  font-size: 18px;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .controls {
     grid-template-columns: 1fr;

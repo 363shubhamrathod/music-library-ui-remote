@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import './App.css';
 
-// Types
 interface Song {
   id: string;
   title: string;
@@ -18,7 +17,6 @@ interface User {
   role: 'admin' | 'user';
 }
 
-// Mock data
 const mockSongs: Song[] = [
   { id: '1', title: 'Bohemian Rhapsody', artist: 'Queen', album: 'A Night at the Opera', year: 1975, genre: 'Rock', duration: '5:55' },
   { id: '2', title: 'Hotel California', artist: 'Eagles', album: 'Hotel California', year: 1976, genre: 'Rock', duration: '6:30' },
@@ -35,10 +33,9 @@ const mockUsers: User[] = [
   { id: '2', username: 'user', role: 'user' },
 ];
 
-// Mock JWT functions
 const generateMockJWT = (user: User): string => {
   const payload = { userId: user.id, username: user.username, role: user.role };
-  return btoa(JSON.stringify(payload)); // Simple base64 encoding for demo
+  return btoa(JSON.stringify(payload));
 };
 
 const decodeMockJWT = (token: string): User | null => {
@@ -55,14 +52,12 @@ function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [showLogin, setShowLogin] = useState(true);
   
-  // Filter and sort states
   const [searchTerm, setSearchTerm] = useState('');
   const [filterBy, setFilterBy] = useState<'all' | 'album' | 'artist' | 'title'>('all');
   const [sortBy, setSortBy] = useState<'title' | 'artist' | 'album' | 'year'>('title');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [groupBy, setGroupBy] = useState<'none' | 'album' | 'artist' | 'year'>('none');
   
-  // New song form
   const [showAddForm, setShowAddForm] = useState(false);
   const [newSong, setNewSong] = useState<Omit<Song, 'id'>>({
     title: '',
@@ -73,7 +68,6 @@ function App() {
     duration: '',
   });
 
-  // Check for existing JWT on mount
   useEffect(() => {
     const token = localStorage.getItem('musicLibraryJWT');
     if (token) {
@@ -85,7 +79,6 @@ function App() {
     }
   }, []);
 
-  // Login function
   const handleLogin = (username: string) => {
     const user = mockUsers.find(u => u.username === username);
     if (user) {
@@ -96,14 +89,12 @@ function App() {
     }
   };
 
-  // Logout function
   const handleLogout = () => {
     localStorage.removeItem('musicLibraryJWT');
     setCurrentUser(null);
     setShowLogin(true);
   };
 
-  // Add new song
   const handleAddSong = () => {
     if (newSong.title && newSong.artist && newSong.album) {
       const song: Song = {
@@ -123,16 +114,13 @@ function App() {
     }
   };
 
-  // Delete song
   const handleDeleteSong = (id: string) => {
     setSongs(prev => prev.filter(song => song.id !== id));
   };
 
-  // Filtered and sorted songs
   const filteredAndSortedSongs = useMemo(() => {
     let filtered = songs;
 
-    // Apply search filter
     if (searchTerm) {
       filtered = songs.filter(song => {
         const searchLower = searchTerm.toLowerCase();
@@ -145,7 +133,6 @@ function App() {
       });
     }
 
-    // Apply specific filter
     if (filterBy !== 'all') {
       const filterValue = searchTerm.toLowerCase();
       filtered = filtered.filter(song => {
@@ -154,7 +141,6 @@ function App() {
       });
     }
 
-    // Sort songs
     filtered.sort((a, b) => {
       const aValue = a[sortBy];
       const bValue = b[sortBy];
@@ -175,7 +161,6 @@ function App() {
     return filtered;
   }, [songs, searchTerm, filterBy, sortBy, sortOrder]);
 
-  // Group songs
   const groupedSongs = useMemo(() => {
     if (groupBy === 'none') return { 'All Songs': filteredAndSortedSongs };
 
@@ -187,7 +172,6 @@ function App() {
     }, {} as Record<string, Song[]>);
   }, [filteredAndSortedSongs, groupBy]);
 
-  // Statistics using reduce
   const stats = useMemo(() => {
     return songs.reduce((acc, song) => {
       acc.totalSongs++;
